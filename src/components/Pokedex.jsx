@@ -12,49 +12,64 @@ const Pokedex = () => {
 // Accediendo a las propiedades como un objeto, las cuales se ven a traves de la consola de redux
 //state representa al estado (userName) name a la propiedad dentro de userName
 //se puede colocar el nombre que quieras, lo mas comun es colocarle state
-  const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array desde la api
-  const [pokemonName, setPokemonName] = useState("");
-  const [locations, setLocations] = useState([]);
+ 
+//estado para consumir el listado de pokemons
+const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array desde la api
+
+//estado para capturar lo que escribe usuario usandolo en onChamge
+  const [pokemonName, setPokemonName] = useState("");//string vacio porque es para el input
+
+//estado para consumir los types
+  const [pokemonTypes, setPokemonTypes] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    //para pokemos
     axios
       .get("https://pokeapi.co/api/v2/pokemon/")
       .then((res) => setPokemonList(res.data.results));
-
+   //para los types
     axios
-      .get("https://rickandmortyapi.com/api/location")
-      .then((res) => setLocations(res.data.results));
+      .get("https://pokeapi.co/api/v2/type/")
+      .then((res) => setPokemonTypes(res.data.results));
   }, []);
 
-  const searchCharacter = () => {
-    navigate(`/pokemonList/${pokemonName}`);
-  };
+  const onClickSearchPokemon = () => {//creams funcion flecha para el onClick del button
+    navigate(`/pokedex/${pokemonName}`);//agregamos en navegate lo que el usuario haya escrito
+  };//el pokedex viene de pokedex/:id en app.jsx
 
+ //funcion para el onClick en select
   const filterType = (e) => {
-    const url = e.target.value;
-    axios.get(url).then((res) => setPokemonList(res.data.residents));
+    const url = e.target.value; //toma la url que viene de value en el select
+    //consumo los pokemon types
+    axios.get(url).then((res) => setPokemonTypes(res?.data.pokemon));  
   };
 
-  console.log(pokemonList);
+
+
   return (
     <div>
       <h1>pokemonList</h1>
        <p>Welcome {userName}!</p>{/*muestro la variable desde el useSelector */}
       <div>
-        <input
+      {/* input para el buscador */}
+        <input 
           type="text"
-          placeholder="search character"
-          value={pokemonName}
-          onChange={(e) => setPokemonName(e.target.value)}
+          placeholder="search pokemon"
+          value={pokemonName} //le agregamos el value 
+          //y solictamos los que hay en el estado pokemonName
+          onChange={(e) => setPokemonName(e.target.value)}//agregamos el onChange 
+          //que recibe el evento y setea el estado
         />
-        <button onClick={searchCharacter}>Search</button>
-
-        <select onChange={filterType} name="" id="">
-          {locations.map((location) => (
-            <option value={location.url} key={location.name}>
-              {location.name}
+        {/* boton para el buscador */}
+        <button onClick={onClickSearchPokemon}>Search</button>
+        {/* select para tipos de pokemon */}
+        <select onChange={filterType} name="" id="">//onChange para capturar el input
+          {pokemonTypes.map((pokemonTypes) => (//aca recibo cada type
+          //y por cada ubicacion voy a mostrar un option
+            <option value={pokemonTypes.url} key={pokemonTypes.name}>
+              {pokemonTypes.name}
             </option>
           ))}
         </select>
@@ -62,8 +77,13 @@ const Pokedex = () => {
       <ul>
         {pokemonList.map((pokemon) => (
           <PokemonCard //mostrara este componente por cada url
-            url={pokemon.url ? pokemon.url : pokemon}// envio la url por props, url que me lleva al pokemon individualemnte
-            key={pokemon.url ? pokemon.url : pokemon}
+            url={pokemon.url ? pokemon.url : pokemon.url}// envio la url por props, url que me lleva al pokemon individualemnte
+            key={pokemon.url ? pokemon.url : pokemon.url}
+            //al principio nos muestra todos los pokemones 
+            //pero luego al darle click yo quiero que me muestre pokes flitrados
+            //como esta es la parte visual, pregunto si al hacer pokemon.url? 
+            //pregunto si puedo acceder, si no puedo le digo que haga pokemon.pokemon
+            //ya que despues del filrado necesitamos mostras las url de pokemon que es un array filtrado por tipos
           />
         ))}
       </ul>

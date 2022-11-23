@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import nameSlice from "./slices/name.slice";
+import nameSlice from "./slices/name.slice"; //importante no importar con llaves
 
 export default configureStore({
   reducer: {

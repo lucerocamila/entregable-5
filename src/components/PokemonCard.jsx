@@ -12,11 +12,13 @@ const PokemonCard = ({ url }) => { //recibimos la prop url desde pokedex
     axios.get(url).then((res) => setPokemon(res.data));//usamos la url pasada por props
   }, []);
   //consumir api END
-console.log(pokemon)
   return (
     <Link to={`/pokedex/${pokemon.id}`}>
        <h1>{pokemon.name}</h1>{/*consumimos lo que queremos que se muestre */}
-      <img src={pokemon.sprites?.other.dream_world.front_default} alt="" />
+      <img src={pokemon.sprites?.other['official-artwork'].front_default} alt="" />
+      {/* //importante: para acceder a una propiedad que lleva guion medio en su nombre
+      //debemos acceder a ella sin el primer punto, entre[""]. y con el punto final
+      //otra imagen linda pokemon.sprites?.other.dream_world.front_default */}
     </Link>
   );
 };
