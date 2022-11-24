@@ -21,7 +21,9 @@ const InputName = () => {
   };
 
   return (
-    <div>
+    <div className="welcome">
+             <p>Welcome {userName}!</p>
+
       <h1>Input name</h1>
       <input
         type="text"

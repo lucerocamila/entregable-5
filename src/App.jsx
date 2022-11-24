@@ -3,8 +3,7 @@ import PokemonDetail from "./components/PokemonDetail";
 import Pokedex from "./components/Pokedex";
 import InputName from "./components/InputName";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import PokemonCard from "./components/PokemonCard";
-import "./styles.css";
+import "./App.css";
 
 function App() {
   return (

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PokemonCard from "./PokemonCard";
+import "../App.css"
 
 //bienvenida a usuario
 const Pokedex = () => {
@@ -27,7 +28,7 @@ const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array de
   useEffect(() => {
     //para pokemos
     axios
-      .get("https://pokeapi.co/api/v2/pokemon/")
+      .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100")
       .then((res) => setPokemonList(res.data.results));
    //para los types
     axios
@@ -35,58 +36,81 @@ const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array de
       .then((res) => setPokemonTypes(res.data.results));
   }, []);
 
-  const onClickSearchPokemon = () => {//creams funcion flecha para el onClick del button
-    navigate(`/pokedex/${pokemonName}`);//agregamos en navegate lo que el usuario haya escrito
-  };//el pokedex viene de pokedex/:id en app.jsx
+  const onClickSearchPokemon = () => {
+    navigate(`/pokedex/${pokemonName}`);
+  };
 
  //funcion para el onClick en select
   const filterType = (e) => {
-    const url = e.target.value; //toma la url que viene de value en el select
-    //consumo los pokemon types
+    const url = e.target.value; 
     axios.get(url).then((res) => setPokemonTypes(res?.data.pokemon));  
   };
+  const [page, setPage] = useState(1);
+  const pokemonsPerPage = 10;
+  const lastIndex = page * pokemonsPerPage;
+  const firstIndex = lastIndex - pokemonsPerPage;
+  const pokemonPaginated = pokemonList.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(pokemonList?.length / pokemonsPerPage);
+  const numbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    numbers.push(i);
+  }
+
 
 
 
   return (
-    <div>
-      <h1>pokemonList</h1>
-       <p>Welcome {userName}!</p>{/*muestro la variable desde el useSelector */}
+    <div className='App'>
+      <h1 className='title'>Hi {userName}! <br /> Choose your pokemon</h1>
       <div>
       {/* input para el buscador */}
         <input 
           type="text"
           placeholder="search pokemon"
-          value={pokemonName} //le agregamos el value 
-          //y solictamos los que hay en el estado pokemonName
-          onChange={(e) => setPokemonName(e.target.value)}//agregamos el onChange 
-          //que recibe el evento y setea el estado
+          value={pokemonName} 
+          onChange={(e) => setPokemonName(e.target.value)}
         />
-        {/* boton para el buscador */}
         <button onClick={onClickSearchPokemon}>Search</button>
         {/* select para tipos de pokemon */}
-        <select onChange={filterType} name="" id="">//onChange para capturar el input
-          {pokemonTypes.map((pokemonTypes) => (//aca recibo cada type
-          //y por cada ubicacion voy a mostrar un option
-            <option value={pokemonTypes.url} key={pokemonTypes.name}>
+        <select onChange={filterType} name="" id="">
+          {pokemonTypes.map((pokemonTypes) => (
+            <option key={pokemonTypes.url} value={pokemonTypes.url}>
               {pokemonTypes.name}
             </option>
           ))}
         </select>
-      </div>
-      <ul>
-        {pokemonList.map((pokemon) => (
+      </div>        
+      
+      <p className='keep'>Keep going!</p>
+
+      <div className="pagination">
+      <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+            Prev pag
+          </button>
+          {numbers.map((number) => (
+            <button key={number} onClick={() => setPage(number)}>
+              {number}
+            </button>
+          ))}
+          <button
+            onClick={() => setPage(page + 1)}
+            disabled={page === totalPages}
+          >
+            Next pag
+          </button>
+          </div>
+      <ul >
+        {pokemonPaginated.map((pokemon) => (
           <PokemonCard //mostrara este componente por cada url
-            url={pokemon.url ? pokemon.url : pokemon.url}// envio la url por props, url que me lleva al pokemon individualemnte
+            url={pokemon.url ? pokemon.url : pokemon.url}
             key={pokemon.url ? pokemon.url : pokemon.url}
-            //al principio nos muestra todos los pokemones 
-            //pero luego al darle click yo quiero que me muestre pokes flitrados
-            //como esta es la parte visual, pregunto si al hacer pokemon.url? 
-            //pregunto si puedo acceder, si no puedo le digo que haga pokemon.pokemon
-            //ya que despues del filrado necesitamos mostras las url de pokemon que es un array filtrado por tipos
+           
           />
         ))}
       </ul>
+     
+          
+  
     </div>
   );
 };

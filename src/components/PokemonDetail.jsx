@@ -3,10 +3,13 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom"; // debemos importarlo
+import "../App.css"
 const PokemonDetail = () => {
 
   const { id } = useParams(); //recibimos el :id dinamico con useParams
   // el cual declaramos en App.jsx
+
+
 
   // consumimos la api
   const [pokemon, setPokemon] = useState({});//ponemos {} porque vamos a llamar a un solo pokemon
@@ -20,7 +23,7 @@ const PokemonDetail = () => {
   return (
     <div>
       <h1>{pokemon.name}</h1>
-      <img src={pokemon.sprites?.other.dream_world.front_default} alt="" />
+      <img src={pokemon.sprites?.other.dream_world.front_default}  alt="" />
       <div className={`display-container`} >
       <div className='display-header'>
       <article className='pokemon-display'>
