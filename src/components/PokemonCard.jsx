@@ -28,20 +28,20 @@ const PokemonCard = ({ url }) => {
 
 
   return (
-    <Link to={`/pokedex/${pokemon.id}`} key={pokemon.id}>
-      <article className="card" key={pokemon.id}>
-        <header className='header'>
-          <h3>{pokemon.name}</h3>
-          <div className="see-more">
-            mores
-          </div>
-        </header>
-        <section className='pokemon-img'>
-          <img src={pokemon.sprites?.other["official-artwork"]["front_default"]} alt="" />
-
-        </section>
-
-
+    <Link to={`/pokedex/${pokemon.id}`}>
+     <article className="card">
+     <header className='header'>
+      <h3>{pokemon.name}</h3>
+      <div className="see-more">
+         more
+        </div>
+       </header> 
+           <section className='pokemon-img'>
+        <img src={pokemon.sprites?.other["official-artwork"]["front_default"]} alt="" />
+       
+      </section>
+     
+      
       </article>
       <div className="div-footer">
         <div className="type">

@@ -32,10 +32,8 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
 
  //funcion para el onClick en select
   const filterType = (e) => {
-    const url = e.target.value 
-    axios.get(url)
-    .then(res => setPokemonList(res.data.pokemon)) 
-   console.log(pokemonList)
+    const url = e.target.value; 
+    axios.get(url).then((res) => setPokemonTypes(res.data.pokemon));  
   };
   const [page, setPage] = useState(1);
   const pokemonsPerPage = 10;
@@ -65,8 +63,8 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
         <button onClick={onClickSearchPokemon}>Search</button>
         {/* select para types */}
         <select onChange={filterType} name="" id="">
-          {pokemonTypes.map(pokemonTypes => (
-            <option  value={pokemonTypes.url} key={pokemonTypes.name}>
+          {pokemonTypes.map((pokemonTypes) => (
+            <option  value={pokemonTypes.url} key={pokemonTypes.url}>
               {pokemonTypes.name}
             </option>
           ))}
@@ -94,8 +92,8 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
       <ul >
         {pokemonPaginated.map((pokemon) => (
           <PokemonCard 
-            url={pokemon.url ? pokemon.url : pokemon.pokemon.url}
-            key={pokemon.url ? pokemon.url : pokemon.pokemon.url}
+            url={pokemon.url ? pokemon.url : pokemon.url}
+            key={pokemon.url ? pokemon.pokemon?.url : pokemon.url}
            
           />
         ))}
