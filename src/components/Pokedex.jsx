@@ -20,20 +20,22 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
     axios
       .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100")
       .then((res) => setPokemonList(res.data.results));
+
     axios
       .get("https://pokeapi.co/api/v2/type/")
       .then((res) => setPokemonTypes(res.data.results));
   }, []);
 
   const onClickSearchPokemon = () => {
-    navigate(`/pokedex/${pokemonName}`);
+    navigate(`/pokedex/${pokemonName}`)
   };
 
  //funcion para el onClick en select
   const filterType = (e) => {
-    const url = e.target.value; 
-    axios.get(url).then((res) => setPokemonList(res.data.pokemon));  
-  };
+    const url = e.target.value 
+    axios.get(url)
+    .then(res => setPokemonList(res.data.pokemon))  
+  }
   const [page, setPage] = useState(1);
   const pokemonsPerPage = 10;
   const lastIndex = page * pokemonsPerPage;
@@ -62,12 +64,15 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
         <button onClick={onClickSearchPokemon}>Search</button>
         {/* select para types */}
         <select onChange={filterType} name="" id="">
-          {pokemonTypes.map(pokemonTypes =>(
-            <option  value={pokemonTypes.url} key={pokemonTypes.name}>
+          {pokemonTypes.map((pokemonTypes) => (
+            <option  
+              value={pokemonTypes.url} 
+              key={pokemonTypes.name}
+            >
               {pokemonTypes.name}
             </option>
           ))}
-        </select>
+        </select> 
       </div>        
       
       <p className='keep'>Keep going!</p>
@@ -91,8 +96,8 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
       <ul >
         {pokemonPaginated.map((pokemon) => (
           <PokemonCard 
-            url={pokemon.url ? pokemon.url : pokemon.pokemom?.url}
-            key={pokemon.url ? pokemon.url : pokemon.pokemon?.url}
+            url={pokemon.url ? pokemon.url : pokemon.pokemon.url}
+            key={pokemon.url ? pokemon.url : pokemon.pokemon.url}
            
           />
         ))}
