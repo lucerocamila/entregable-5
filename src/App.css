@@ -40,6 +40,7 @@ justify-content: center;
   text-shadow: 10px salmon solid;
   height: 30vh;
 background-image: url(../src/assets/TITLE.png);
+filter:brightness(200%);
 background-repeat: no-repeat;
 background-size: contain;
 background-position: right;
@@ -127,7 +128,7 @@ text-align: center;
 }
 
 
-.card__img{
+.pokemon-img{
   display: flex;
   justify-content: center;
   align-items: center;

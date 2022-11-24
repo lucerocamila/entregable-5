@@ -7,30 +7,19 @@ import { useNavigate } from "react-router-dom";
 import PokemonCard from "./PokemonCard";
 import "../App.css"
 
-//bienvenida a usuario
+//welcome
 const Pokedex = () => {
-  const userName = useSelector((state) => state.name);//renombro el estado userName y le digo con use selector que retorne la info de name
-// Accediendo a las propiedades como un objeto, las cuales se ven a traves de la consola de redux
-//state representa al estado (userName) name a la propiedad dentro de userName
-//se puede colocar el nombre que quieras, lo mas comun es colocarle state
- 
-//estado para consumir el listado de pokemons
-const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array desde la api
-
-//estado para capturar lo que escribe usuario usandolo en onChamge
-  const [pokemonName, setPokemonName] = useState("");//string vacio porque es para el input
-
-//estado para consumir los types
-  const [pokemonTypes, setPokemonTypes] = useState([]);
+const userName = useSelector((state) => state.name);
+const [pokemonList, setPokemonList] = useState([]);
+const [pokemonName, setPokemonName] = useState("");
+const [pokemonTypes, setPokemonTypes] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    //para pokemos
     axios
       .get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100")
       .then((res) => setPokemonList(res.data.results));
-   //para los types
     axios
       .get("https://pokeapi.co/api/v2/type/")
       .then((res) => setPokemonTypes(res.data.results));
@@ -43,7 +32,7 @@ const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array de
  //funcion para el onClick en select
   const filterType = (e) => {
     const url = e.target.value; 
-    axios.get(url).then((res) => setPokemonTypes(res?.data.pokemon));  
+    axios.get(url).then((res) => setPokemonTypes(res.data.pokemon));  
   };
   const [page, setPage] = useState(1);
   const pokemonsPerPage = 10;
@@ -71,10 +60,10 @@ const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array de
           onChange={(e) => setPokemonName(e.target.value)}
         />
         <button onClick={onClickSearchPokemon}>Search</button>
-        {/* select para tipos de pokemon */}
+        {/* select para types */}
         <select onChange={filterType} name="" id="">
           {pokemonTypes.map((pokemonTypes) => (
-            <option key={pokemonTypes.url} value={pokemonTypes.url}>
+            <option  value={pokemonTypes.url} key={pokemonTypes.url}>
               {pokemonTypes.name}
             </option>
           ))}
@@ -101,9 +90,9 @@ const [pokemonList, setPokemonList] = useState([]);//vamos a recibir un array de
           </div>
       <ul >
         {pokemonPaginated.map((pokemon) => (
-          <PokemonCard //mostrara este componente por cada url
+          <PokemonCard 
             url={pokemon.url ? pokemon.url : pokemon.url}
-            key={pokemon.url ? pokemon.url : pokemon.url}
+            key={pokemon.url ? pokemon.pokemon?.url : pokemon.url}
            
           />
         ))}

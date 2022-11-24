@@ -7,7 +7,7 @@ import "../App.css"
 
 
 //(characterCard)
-const PokemonCard = ({ url }) => { //recibimos la prop url desde pokedex
+const PokemonCard = ({ url }) => { 
   const StatPokemon = ({infoStat}) => {
     return (
       <li className='pokestat'>
@@ -15,12 +15,10 @@ const PokemonCard = ({ url }) => { //recibimos la prop url desde pokedex
         <p> {infoStat.base_stat}</p>
       </li>)}
 
-  //consumir api
-  const [pokemon, setPokemon] = useState({});//vamos a hacer un map de los objetos
+  const [pokemon, setPokemon] = useState({});
   useEffect(() => {
-    axios.get(url).then((res) => setPokemon(res.data));//usamos la url pasada por props
+    axios.get(url).then((res) => setPokemon(res.data));
   }, []);
-  //consumir api END
   return (
     <Link to={`/pokedex/${pokemon.id}`}>
      <article className="card">
@@ -30,7 +28,7 @@ const PokemonCard = ({ url }) => { //recibimos la prop url desde pokedex
          more
         </div>
        </header> 
-           <section className='card__img'>
+           <section className='pokemon-img'>
         <img src={pokemon.sprites?.other["official-artwork"]["front_default"]} alt="" />
        
       </section>

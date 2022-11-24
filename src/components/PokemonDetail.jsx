@@ -2,23 +2,18 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom"; // debemos importarlo
+import { useParams } from "react-router-dom";
 import "../App.css"
 const PokemonDetail = () => {
 
-  const { id } = useParams(); //recibimos el :id dinamico con useParams
-  // el cual declaramos en App.jsx
+  const { id } = useParams(); 
 
-
-
-  // consumimos la api
-  const [pokemon, setPokemon] = useState({});//ponemos {} porque vamos a llamar a un solo pokemon
+  const [pokemon, setPokemon] = useState({});
   useEffect(() => {
     axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${id}`)//usamos backtics para que sea dinamico
+      .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
       .then((res) => setPokemon(res.data));
-  }, [id]);//si vamos a modificar el id es importante ponerlo aqui
-  // consumimos la api
+  }, [id]);
 
     console.log
 
