@@ -28,8 +28,8 @@ const PokemonCard = ({ url }) => {
 
 
   return (
-    <Link to={`/pokedex/${pokemon.id}`}>
-     <article className="card">
+    <Link to={`/pokedex/${pokemon.id}`} key={pokemon.id}>
+     <article className="card" key={pokemon.id}>
      <header className='header'>
       <h3>{pokemon.name}</h3>
       <div className="see-more">
