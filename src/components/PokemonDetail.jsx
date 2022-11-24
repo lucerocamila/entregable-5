@@ -15,10 +15,10 @@ const PokemonDetail = () => {
       .then((res) => setPokemon(res.data));
   }, [id]);
 
-    console.log
+  
 
   return (
-    <div>
+    <div key={pokemon.id}>
       <h1>{pokemon.name}</h1>
       <img src={pokemon.sprites?.other.dream_world.front_default}  alt="" />
       <div className={`display-container`} >
