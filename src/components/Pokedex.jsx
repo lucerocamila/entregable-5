@@ -62,8 +62,8 @@ const [pokemonTypes, setPokemonTypes] = useState([]);
         <button onClick={onClickSearchPokemon}>Search</button>
         {/* select para types */}
         <select onChange={filterType} name="" id="">
-          {pokemonTypes.map((pokemonTypes) => (
-            <option  value={pokemonTypes.url} key={pokemonTypes.url}>
+          {pokemonTypes.map(pokemonTypes =>(
+            <option  value={pokemonTypes.url} key={pokemonTypes.name}>
               {pokemonTypes.name}
             </option>
           ))}
