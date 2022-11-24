@@ -20,6 +20,8 @@ const PokemonDetail = () => {
   }, [id]);//si vamos a modificar el id es importante ponerlo aqui
   // consumimos la api
 
+    console.log
+
   return (
     <div>
       <h1>{pokemon.name}</h1>
@@ -45,8 +47,10 @@ const PokemonDetail = () => {
               <li key={stat.stat.url} className='display-stats'>
                 <h4>{stat.stat.name} / <span>{stat.base_stat}</span></h4>
               </li>
-            ))
-          }
+            ))        
+
+          }            
+
         </ul>
     </div>
       
